@@ -1,0 +1,61 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class login_Pom {
+
+    public  WebElement btn(WebDriver driver){
+        By login_btn= By.className("login-btn");
+        WebElement login_btn_Ele=driver.findElement(login_btn);
+        return login_btn_Ele;
+    }
+
+    public WebElement userNamePom(WebDriver driver) {
+        By userEmail = By.name("user-email");
+        WebElement user_EmailEle = driver.findElement(userEmail);
+        return user_EmailEle;
+    }
+
+
+    public WebElement passwordPom(WebDriver driver) {
+        By password=By.name("user-password");
+        WebElement passwordEle=driver.findElement(password);
+        return passwordEle;
+
+    }
+
+    public WebElement submitPom(WebDriver driver){
+        By submit=By.className("btnSubmit");
+        WebElement submitEle=driver.findElement(submit);
+        return submitEle;
+
+    }
+    public WebElement dropDown_MtAccount(WebDriver driver){
+        WebElement sign_Out =driver.findElement(By.xpath("//ul//li//a[contains(text(),'Sign Out')]"));
+        return sign_Out;
+    }
+    public WebElement myAccountPom(WebDriver driver){
+        By myAccount=By.xpath("//div[@class='pm-btn']//h4[text()='My Account");
+        WebElement myAccountEle=driver.findElement(myAccount);
+        return myAccountEle;
+    }
+    public WebElement fullName(WebDriver driver){
+        WebElement edit_FullName=driver.findElement(By.xpath("//form/div/label[contains(text(),'Full Name')]"));
+        return edit_FullName;
+    }
+    public  WebElement phone(WebDriver driver){
+        WebElement phoneNumber=driver.findElement(By.xpath("//label[text()='Mobile No.']"));
+        return phoneNumber;
+    }
+    public WebElement mail0(WebDriver driver){
+        WebElement editEmail=driver.findElement(By.xpath("//input[@name='email']"));
+        return editEmail;
+    }
+
+    public WebElement button(WebDriver driver){
+        WebElement bttn=driver.findElement(By.className("btn-orange"));
+        return bttn;
+    }
+
+}
+

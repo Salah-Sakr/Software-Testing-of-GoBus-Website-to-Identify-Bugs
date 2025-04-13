@@ -1,0 +1,212 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.asserts.SoftAssert;
+
+import java.time.Duration;
+
+public class login {
+    login_Pom loginn=new login_Pom();
+    WebDriver driver;
+    SoftAssert softAssert=new SoftAssert();
+
+
+
+   /* @DataProvider(name="Login_Data")
+    public Object[][] login_data() {
+        return new Object[][]{
+                {"yyhlwysmila@gmail.com", "Samar_1972#"},
+                {"sss@gmail.com", "1111111"},
+                {"yyhlwysmila@gmail.com", "22222222222"},
+                {"sss@gmail.com", "Samar_1972#"},
+        };
+    }*/
+
+
+    @BeforeTest
+
+    public void before_Test(){
+
+        System.out.println("I will beganning the Test Process");
+
+    }
+    @BeforeClass
+    public void before_Class(){
+        System.out.println("I will test Login Feature");
+        System.setProperty("webdriver.chrome.driver","C:\\Users\\Hp\\Downloads\\chromedriver-win64\\chromedriver.exe");
+        driver= new ChromeDriver();
+        driver.manage().window().maximize();
+
+    }
+
+    @BeforeMethod
+    public void before_loginTest(){
+
+    }
+
+    @Test (priority = 1)
+    public void login_TC_001() throws InterruptedException {
+        //Login with valid E_mail and Password
+        driver.get("https://go-bus.com/?lang=en");
+        System.out.println(driver.getTitle());
+        softAssert.assertEquals(driver.getTitle(), "Go Bus Official Website For Booking Buses In Egypt", "Error1");
+        loginn.btn(driver).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("login-btn")));
+
+
+        loginn.userNamePom(driver).sendKeys("yyhlwysmila@gmail.com");
+        loginn.passwordPom(driver).sendKeys("Samar_1972#");
+        loginn.submitPom(driver).click();
+        Thread.sleep(5000);
+
+        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("pm-btn"));
+        WebElement _Acc=driver.findElement(By.className("pm-btn"));
+        _Acc.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("pm-btn")));
+
+
+        //Select dropDown=new Select (_Acc);
+        //dropDown.selectByIndex(1);
+        //loginn.myAccountPom(driver).click();
+
+
+        //WebElement myAccount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='pm-btn']//h4[text()='My Account']")));
+        /*SoftAssert softAssert1=new SoftAssert();
+        String expectedResult ="";
+        String actualResult="//div[@class='pm-btn']//h4[text()='My Account";
+        softAssert1.*/
+
+
+        WebElement dropdown = driver.findElement(By.xpath("//ul/li/a[contains(text(),'My Account')]"));
+        dropdown.click();
+        WebElement myAccountt=driver.findElement(By.xpath("//ul//li/a[contains(text(),'My Account')]"));
+        myAccountt.click();
+        Thread.sleep(5000);
+        driver.get("https://go-bus.com/profile/edit?lang=en");
+
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//ul//li/a[contains(text(),'My Account')]")));
+         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div//h3[text()='Edit Profile']")));
+
+
+        //WebElement ee=driver.findElement(By.className("account-content active"));
+        //ee.click();
+        loginn.fullName(driver).clear();
+        loginn.fullName(driver).sendKeys("Samar");
+        loginn.phone(driver).clear();
+        loginn.phone(driver).sendKeys("12665442541");
+        loginn.mail0(driver).click();
+        loginn.mail0(driver).sendKeys("yyhlwysmila@gmail.com");
+        loginn.btn(driver).click();
+
+       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/p[text()='Data updated successfully']")));
+
+        //div/p[text()='Data updated successfully']
+
+
+
+
+
+
+
+    }
+    @AfterMethod
+    public  void afterTest_1() {
+        //driver.quit();
+        System.out.println("login Test Case 1 Passed");
+
+    }
+
+    @BeforeMethod
+    public void test_2(){
+       // System.setProperty("webdriver.chrome.driver","C:\\Users\\Hp\\Downloads\\chromedriver-win64\\chromedriver.exe");
+        //driver= new ChromeDriver();
+        driver.manage().window().maximize();
+
+    }
+
+    @Test (priority = 2)
+    public void test_TC_002() {
+        //login with invaild Email and Password
+        //driver.get("https://go-bus.com/?lang=en");
+        driver.get("https://go-bus.com/?lang=en");
+        loginn.btn(driver).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("login-btn")));
+        loginn.userNamePom(driver).sendKeys("sss@gmail.com");
+        loginn.passwordPom(driver).sendKeys("1111111");
+        loginn.submitPom(driver).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("btnSubmit")));
+        String expectedResult = "- Sorry, something went wrong";
+
+        WebElement errorMsg = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//h4/div[@class='error-validition']")
+        ));
+
+        //WebElement mess_Fail = driver.findElement(By.xpath("\"//div[@class='error-validation']/p[contains(text(), 'Sorry, something went wrong')]\""));
+
+
+        String ActualResult = errorMsg.getText();
+        softAssert.assertEquals(ActualResult, expectedResult, "Error");
+        //wait.until(ExpectedConditions.visibilityOf(mess_Fail));
+        softAssert.assertAll();
+
+    }
+    @AfterMethod
+            public  void afterTest_2(){
+        //driver.quit();
+        System.out.println("login Test Case 2 Passed");
+        
+    }
+
+    @BeforeMethod
+    public void test_3() {
+        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Hp\\Downloads\\chromedriver-win64\\chromedriver.exe");
+        driver.manage().window().maximize();
+    }
+
+    @Test(priority = 3)
+    public void test_TC_003() {
+        //login with vaild Email and invalid Password
+        driver.get("https://go-bus.com/?lang=en");
+        loginn.btn(driver).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("login-btn")));
+        loginn.userNamePom(driver).sendKeys("yyhlwysmila@gmail.com");
+        loginn.passwordPom(driver).sendKeys("22222222222");
+        loginn.submitPom(driver).click();
+        WebElement errorMsg = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//h4/div[@class='error-validition']")
+        ));
+
+
+        String expectedResult3 = "- Sorry, something went wrong";
+        WebElement mess_Fail3 = driver.findElement(By.xpath("//h4/div[@class='error-validition']"));
+        String ActualResult3 = mess_Fail3.getText();
+        softAssert.assertEquals(ActualResult3, expectedResult3, "Error");
+        //wait.until(ExpectedConditions.visibilityOf(mess_Fail3));
+        softAssert.assertAll();
+
+    }
+    @AfterMethod
+    public  void afterTest_3() {
+        driver.quit();
+        System.out.println("login Test Case 3 Passed");
+
+    }}
+
+
+
+        
+
+
+
+
+
